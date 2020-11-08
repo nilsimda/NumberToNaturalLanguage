@@ -39,15 +39,16 @@ digitToEo 9 = "nau"
 {-WETT-}
 
 numberToEo :: Integer -> String
+numberToEo 0 = digitToEo 0
 numberToEo n = 
-        if last res == ' ' then init res else res
+    if last res == ' ' then init res else res
       where res = digitToEoHelper (mod (div x 100000) 10) "cent " 
-                    ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
-                    ++ digitToEoHelper (mod (div x 1000) 10)  " "
-                    ++ digitToEoHelper x "mil"
-                    ++ digitToEoHelper (mod (div x 100) 10) "cent "
-                    ++ digitToEoHelper (mod (div x 10) 10) "dek "
-                    ++ digitToEoHelper (mod x 10) ""
+                ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
+                ++ digitToEoHelper (mod (div x 1000) 10)  " "
+                ++ digitToEoHelper x "mil"
+                ++ digitToEoHelper (mod (div x 100) 10) "cent "
+                ++ digitToEoHelper (mod (div x 10) 10) "dek "
+                ++ digitToEoHelper (mod x 10) ""
                     where x = read (printf "%06d" n)
 
 
