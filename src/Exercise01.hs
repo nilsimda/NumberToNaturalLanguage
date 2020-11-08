@@ -8,9 +8,9 @@ myPair x y = 2^y * (2 * x + 1) - 1
 
 {-H1.1b)-}
 mySnd :: Integer -> Integer
-mySnd x
-    | even x = x
-    | odd x = mySnd ((x-1) `div` 2)
+mySnd y
+    | even y = 0
+    | odd y = 1 + mySnd ((y-1) `div` 2)
 
 
 {-H1.1c)-}
