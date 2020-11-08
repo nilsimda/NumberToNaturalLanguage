@@ -21,7 +21,7 @@ myFst x = ((x+1) `div` (2 ^ mySnd x) -1) `div` 2
 {-H1.1d)-}
 prop_myPair :: Integer -> Integer -> Integer -> Property
 prop_myPair p x y = 
-    x>=0 && y>=0  ==> property (myPair x y == p)
+    p >= 0 && x>=0 && y>=0  ==> property (myPair x y == p)
 
 {-H2-}
 digitToEo :: Integer -> String
