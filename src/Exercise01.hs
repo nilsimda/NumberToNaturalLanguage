@@ -4,7 +4,7 @@ import Test.QuickCheck
 
 {-H1.1a)-}
 myPair :: Integer -> Integer -> Integer
-myPair = undefined
+myPair x y = 2^y * (2 * x + 1) - 1
 
 {-H1.1b)-}
 mySnd :: Integer -> Integer
