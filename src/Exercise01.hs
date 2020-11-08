@@ -15,11 +15,12 @@ mySnd y
 
 {-H1.1c)-}
 myFst :: Integer -> Integer
-myFst x = ((x+1) `div` (2 ^ mySnd x ) -1) `div` 2
+myFst x = ((x+1) `div` (2 ^ mySnd x) -1) `div` 2
 
 {-H1.1d)-}
 prop_myPair :: Integer -> Integer -> Integer -> Property
-prop_myPair = undefined
+prop_myPair p x y = 
+    p >=0  ==> property (myPair x y == p)
 
 {-H2-}
 digitToEo :: Integer -> String
