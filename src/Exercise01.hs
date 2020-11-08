@@ -40,6 +40,7 @@ digitToEo 9 = "nau"
 
 numberToEo :: Integer -> String
 numberToEo 0 = digitToEo 0
+numberToEo 1000 = "mil"
 numberToEo n = 
     if last res == ' ' then init res else res
       where res = digitToEoHelper (mod (div x 100000) 10) "cent " 
