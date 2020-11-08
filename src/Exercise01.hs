@@ -40,12 +40,11 @@ digitToEo 9 = "nau"
 
 numberToEo :: Integer -> String
 numberToEo 0 = digitToEo 0
-numberToEo 1000 = "mil"
 numberToEo n = 
     if last res == ' ' then init res else res
       where res = digitToEoHelper (mod (div x 100000) 10) "cent " 
                 ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
-                ++ digitToEoHelper (mod (div x 1000) 10)  " "
+                {-++ digitToEoHelper (mod (div x 1000) 10)  " "-}
                 ++ digitToEoHelper x "mil"
                 ++ digitToEoHelper (mod (div x 100) 10) "cent "
                 ++ digitToEoHelper (mod (div x 10) 10) "dek "
@@ -54,7 +53,11 @@ numberToEo n =
 
 
 digitToEoHelper:: Integer -> String -> String
-digitToEoHelper x "mil" = if x < 1000 then "" else "mil "
+digitToEoHelper x "mil" {-= if x < 1000 then "" else "mil "-}
+        |x < 1000 = ""
+        |d ==0 || (d == 1 && x < 10000) = "mil "
+        |otherwise = digitToEo d ++ " mil "
+            where d = mod (div x 1000) 10
 digitToEoHelper 0 s = ""
 digitToEoHelper 1 s = if s == "" || s == " " then "unu " else s
 digitToEoHelper x s = digitToEo x ++ s  
