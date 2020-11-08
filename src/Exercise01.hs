@@ -8,7 +8,10 @@ myPair x y = 2^y * (2 * x + 1) - 1
 
 {-H1.1b)-}
 mySnd :: Integer -> Integer
-mySnd = undefined 
+mySnd x
+    | even x = x
+    | odd x = mySnd (x `div` 2)
+
 
 {-H1.1c)-}
 myFst :: Integer -> Integer
