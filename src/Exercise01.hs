@@ -15,7 +15,7 @@ mySnd y
 
 {-H1.1c)-}
 myFst :: Integer -> Integer
-myFst = undefined
+myFst x = ((x+1) `div` (2 ^ mySnd x ) -1) `div` 2
 
 {-H1.1d)-}
 prop_myPair :: Integer -> Integer -> Integer -> Property
