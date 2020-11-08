@@ -40,14 +40,15 @@ digitToEo 9 = "nau"
 
 numberToEo :: Integer -> String
 numberToEo n = 
-    let x = read (printf "%06d" n) in 
-      init (digitToEoHelper (mod (div x 100000) 10) "cent " 
-        ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
-        ++ digitToEoHelper (mod (div x 1000) 10)  " "
-        ++ digitToEoHelper x "mil"
-        ++ digitToEoHelper (mod (div x 100) 10) "cent "
-        ++ digitToEoHelper (mod (div x 10) 10) "dek "
-        ++ digitToEoHelper (mod x 10) "")
+        if last res == ' ' then init res else res
+      where res = digitToEoHelper (mod (div x 100000) 10) "cent " 
+                    ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
+                    ++ digitToEoHelper (mod (div x 1000) 10)  " "
+                    ++ digitToEoHelper x "mil"
+                    ++ digitToEoHelper (mod (div x 100) 10) "cent "
+                    ++ digitToEoHelper (mod (div x 10) 10) "dek "
+                    ++ digitToEoHelper (mod x 10) ""
+                    where x = read (printf "%06d" n)
 
 
 digitToEoHelper:: Integer -> String -> String
