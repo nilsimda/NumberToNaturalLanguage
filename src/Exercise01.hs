@@ -50,7 +50,7 @@ helper:: Integer -> Integer -> String
 helper n p
     | n == 0 = ""
     | n < 10 = if p == 1 then digitToEoFilter1 n ++ " " else digitToEo n ++ " "
-    | n < 100 = digitToEoFilter1 (div n 10) ++ "dec " ++ helper (mod n 10) 0
+    | n < 100 = digitToEoFilter1 (div n 10) ++ "dek " ++ helper (mod n 10) 0
     | otherwise = digitToEoFilter1 (div n 100) ++ "cent " ++ helper (mod n 100) 0
 
 digitToEoFilter1 :: Integer -> String
