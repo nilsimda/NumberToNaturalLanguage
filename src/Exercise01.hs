@@ -1,7 +1,7 @@
 module Exercise01 where
 
-import Test.QuickCheck
-import Text.Printf
+import Test.QuickCheck ( (==>), Property, Testable(property) )
+import qualified Data.Text as T
 
 {-H1.1a)-}
 myPair :: Integer -> Integer -> Integer
@@ -37,29 +37,34 @@ digitToEo 8 = "ok"
 digitToEo 9 = "nau"
 
 {-WETT-}
+numberToEo :: Integer -> String 
+numberToEo 0 = "nul" 
+numberToEo n =  T.unpack (T.strip (T.pack (concat [helper (mod x 1000) p ++ powers p ++ " "| 
+                            (x,p) <- zip (splitTo3 n) (reverse [0 .. 1])])))
 
-numberToEo :: Integer -> String
-numberToEo 0 = digitToEo 0
-numberToEo n = 
-    if last res == ' ' then init res else res
-      where res = digitToEoHelper (mod (div x 100000) 10) "cent " 
-                ++ digitToEoHelper (mod (div x 10000) 10) "dek " 
-                {-++ digitToEoHelper (mod (div x 1000) 10)  " "-}
-                ++ digitToEoHelper x "mil"
-                ++ digitToEoHelper (mod (div x 100) 10) "cent "
-                ++ digitToEoHelper (mod (div x 10) 10) "dek "
-                ++ digitToEoHelper (mod x 10) ""
-                    where x = read (printf "%06d" n)
+splitTo3 :: Integer -> [Integer]
+splitTo3 0 = []
+splitTo3 n = splitTo3 (div n 1000) ++ [mod n 1000]
 
+helper:: Integer -> Integer -> String
+helper n p
+    | n == 0 = ""
+    | n < 10 = if p == 1 then digitToEoFilter1 n ++ " " else digitToEo n ++ " "
+    | n < 100 = digitToEoFilter1 (div n 10) ++ "dec " ++ helper (mod n 10) 0
+    | otherwise = digitToEoFilter1 (div n 100) ++ "cent " ++ helper (mod n 100) 0
 
-digitToEoHelper:: Integer -> String -> String
-digitToEoHelper x "mil" {-= if x < 1000 then "" else "mil "-}
-        |x < 1000 = ""
-        |d ==0 || (d == 1 && x < 10000) = "mil "
-        |otherwise = digitToEo d ++ " mil "
-            where d = mod (div x 1000) 10
-digitToEoHelper 0 s = ""
-digitToEoHelper 1 s = if s == "" || s == " " then "unu " else s
-digitToEoHelper x s = digitToEo x ++ s  
+digitToEoFilter1 :: Integer -> String
+digitToEoFilter1 1 = ""
+digitToEoFilter1 n = digitToEo n
+
+powers :: Integer -> String
+powers 0 = ""
+powers 1 = "mil"
+powers 2 = "milionoj"
+powers 3 = "miliardoj"
+powers n
+    | even n = numberToEo n ++ "ilionoj"
+    | otherwise = numberToEo n ++ "iliardoj"
 
 {-TTEW-}
+
