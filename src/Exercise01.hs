@@ -40,7 +40,7 @@ digitToEo 9 = "nau"
 numberToEo :: Integer -> String 
 numberToEo 0 = "nul" 
 numberToEo n =  T.unpack (T.strip (T.pack (concat [helper (mod x 1000) p ++ powers p ++ " "| 
-                            (x,p) <- zip (splitTo3 n) (reverse [0 .. 1])])))
+                            (x,p) <- zip (splitTo3 n) (reverse [0 .. toInteger (length (splitTo3 n))-1])])))
 
 splitTo3 :: Integer -> [Integer]
 splitTo3 0 = []
