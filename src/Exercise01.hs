@@ -1,7 +1,7 @@
 module Exercise01 where
 
 import Test.QuickCheck ( (==>), Property, Testable(property) )
-import qualified Data.Text as T
+
 
 {-H1.1a)-}
 myPair :: Integer -> Integer -> Integer
@@ -39,8 +39,8 @@ digitToEo 9 = "nau"
 {-WETT-}
 numberToEo :: Integer -> String 
 numberToEo 0 = "nul" 
-numberToEo n =  T.unpack (T.strip (T.pack (concat [helper (mod x 1000) p ++ powers p ++ " "| 
-                            (x,p) <- zip (splitTo3 n) (reverse [0 .. toInteger (length (splitTo3 n))-1])])))
+numberToEo n =  unwords . words $ concat [helper (mod x 1000) p ++ powers p (mod x 1000) ++ " "| 
+                            (x,p) <- zip (splitTo3 n) (reverse [0 .. toInteger (length (splitTo3 n))-1])]
 
 splitTo3 :: Integer -> [Integer]
 splitTo3 0 = []
@@ -57,14 +57,12 @@ digitToEoFilter1 :: Integer -> String
 digitToEoFilter1 1 = ""
 digitToEoFilter1 n = digitToEo n
 
-powers :: Integer -> String
-powers 0 = ""
-powers 1 = "mil"
-powers 2 = "milionoj"
-powers 3 = "miliardoj"
-powers n
-    | even n = numberToEo n ++ "ilionoj"
-    | otherwise = numberToEo n ++ "iliardoj"
+powers :: Integer -> Integer -> String
+powers n 0 = "" 
+powers n suf 
+    |n < 4 = ["", "mil", "miliono", "miliardo"] !! fromInteger n ++ mult
+    |otherwise = (if even n then numberToEo (div n 2) ++ "ilionoj" else numberToEo (div (n-1) 2) ++ "iliardoj") ++ mult
+        where mult = if suf == 1 || n < 2 then "" else "j"
 
 {-TTEW-}
 
